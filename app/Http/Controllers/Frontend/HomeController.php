@@ -35,14 +35,61 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|max:255',
+        $request->validate([
+            'heading1' => 'required',
+            'heading2' => 'required',
             'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        //create a new content using the content model
-        Home::create($data);
-        return redirect()->route('admin.home.index')->with('sucess', "Content posted successfully!");
+
+        $fileName = time() . '.' . $request->image->extension();
+        $request->image->storeAs('public/images', $fileName);
+
+        $home = new Home;
+        $home->heading1 = $request->input('heading1');
+        $home->heading2 = $request->input('heading2');
+        $home->description = $request->input('description');
+        $home->image = $fileName;
+        $home->save();
+
+        return redirect()->route('admin.index')->with([
+            'message'=>'User Added Successfully!',
+            'alert-type'=>"success",
+        ]);
+
     }
+    
+
+
+
+
+
+
+
+
+
+        //        dd($home);
+        //        if ($request->hasFile('image')) {
+            //            echo "ok";die();
+
+        // dd($data);
+        // $data = ([
+        //     //                'name'=>$request['name'],
+        //     'heading1' => $request['heading1'],
+        //     'heading2' => $request['heading2'],
+        //     'description' => $request['description'],
+        //     'image' => $request['image']
+        // ]);
+        // $image = $request->file('image');
+        // $imageName = time() . '.' . $image->getClientOriginalExtension();
+        // $image->move(public_path('images'), $imageName);
+        // //create a new content using the content model
+
+            // [
+            //     'image' => $image,
+            //     'filename' => $imageName,
+            //     'path' => 'images/' . $imageName,
+            // ]
 
     /**
      * Display the specified resource.
@@ -70,9 +117,10 @@ class HomeController extends Controller
     {
         // dd($id);
         $validatedData = $request->validate([
-            'title' => 'required|max:250',
+            'heading1' => 'required|max:250',
+            'heading2' => 'required|max:250',
             'description' => 'required',
-            // 'image_url'=>['nullable','mimes:'jpeg,'jpg']
+            'image' => ['nullable', 'mimes: png, jpg']
 
         ]);
         // dd($home, $validatedData);

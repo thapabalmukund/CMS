@@ -27,8 +27,10 @@
             <thead>
                 <tr>
                     <th>S.No</th>
-                    <th>Content title</th>
-                    <th>Content description</th>
+                    <th>Heading 1</th>
+                    <th>Heading 2</th>
+                    <th>Content Description</th>
+                    <th>Image</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
@@ -36,8 +38,15 @@
                 @foreach ($home as $data)
                     <tr>
                         <td>{{ $loop->iteration}}</td>
-                        <td>{{ $data->title }}</td>
+                        <td>{{ $data->heading1 }}</td>
+                        <td>{{ $data->heading2 }}</td>
                         <td>{{ $data->description }}</td>
+                        <td>@if($data->image)
+                                    <img src="{{ asset('storage/images/'.$data->image) }}" style="height: 50px;width:100px;">
+                                    @else 
+                                    <span>No image found!</span>
+                                    @endif
+                        </td>
                         <td class='d-flex '>
                             {{-- delete --}}
                         <form method="POST" action="{{ route('admin.destroy',$data->id) }}">

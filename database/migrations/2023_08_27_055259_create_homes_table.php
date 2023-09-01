@@ -12,8 +12,11 @@ return new class extends Migration {
     {
         Schema::create('homes', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('heading1');
+            $table->string('heading2');
             $table->text('description')->nullable();
+            $table->string('image')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

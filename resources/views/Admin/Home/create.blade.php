@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Add Content Form - Laravel 9 CRUD</title>
+    <title>Add Content Form </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
@@ -24,7 +24,7 @@
             {{ session('status') }}
         </div>
         @endif
-        <form action="{{ route('admin.store') }}" method="POST">
+        <form action="{{ route('admin.store') }}" enctype='multipart/form-data' method="POST">
             @csrf
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -37,20 +37,36 @@
                     </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Content Title:</strong>
-                        <input type="text" name="title" class="form-control" placeholder="Content Title">
-                        @error('title')
+                        <strong>Heading 1</strong>
+                        <input type="text" name="heading1" class="form-control" placeholder="Heading 1">
+                        @error('heading1')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong> Content description</strong>
+                        <strong>Heading 2</strong>
+                        <input type="text" name="heading2" class="form-control" placeholder="Heading 2">
+                        @error('heading2')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong> Content Description</strong>
                         <input type="text" name="description" class="form-control" placeholder="Content Description">
                         @error('description')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
+                        <div class="container">
+                    <div class="form-group mt-2">
+                      <label for="">File</label>
+                      <input type="File" name="image" id="image" class="form-control" placeholder="" aria-describedby="helpId">
+                      <small id="helpId" class="text-muted">Help text</small>
+                    </div>
+                    {{-- <button class="btn btn-primary">Upload</button> --}}
+                </div>
                     </div>
                 </div>
                 </div>
@@ -58,6 +74,22 @@
             </div>
         </form>
     </div>
+          
+    
+    
+    {{-- <form method="post" enctype='multipart/form-data' action='{{url('/admin/store')}}'>
+        @csrf
+    <div class="container">
+        <div class="form-group mt-2">
+          <label for="">File</label>
+          <input type="File" name="image" id="" class="form-control" placeholder="" aria-describedby="helpId">
+          <small id="helpId" class="text-muted">Help text</small>
+        </div>
+        <button class="btn btn-primary">Upload</button>
+    </div>
+    
+        </form> --}}
+
 </body>
 
 </html>

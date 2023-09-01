@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Home1Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AboutusController;
 use App\Http\Controllers\Frontend\ClientsController;
@@ -23,7 +24,7 @@ use App\Http\Controllers\Backend\AdminController;
 
 
 //WEBSITE VIEW PAGES ROUTE & FUNCTION
-Route::get('/', [HomeController::class, 'Display']);
+Route::get('/index', [HomeController::class, 'Display']);
 Route::get('/about', [AboutusController::class, 'Display']);
 Route::get('/service', [ServicesController::class, 'Display']);
 Route::get('/contact', [ContactusController::class, 'index']);
@@ -53,26 +54,31 @@ Route::resource('contact', ContactUsController::class);
 
 
 
+// route of view page after change in content
 
-
-Route::get('/', [AdminController::class, 'Change']);
+Route::get('/index', [AdminController::class, 'Change']);
 Route::get('/about', [AdminController::class, 'Change1']);
-Route::get('/client', [AdminController::class, 'Change']);
-Route::get('/contact', [AdminController::class, 'Change']);
-Route::get('/project', [AdminController::class, 'Change']);
-Route::get('/service', [AdminController::class, 'Change']);
+Route::get('/client', [AdminController::class, 'Change2']);
+Route::get('/contact', [AdminController::class, 'Change3']);
+Route::get('/project', [AdminController::class, 'Change4']);
+Route::get('/service', [AdminController::class, 'Change5']);
+
+
+
+Route::get('/home1', [Home1Controller::class, 'redirect']);
 
 
 
 
-
-
-
-
-
-Route::get('/c', function () {
-    return view('contentuploadwithfile');
+Route::get('/ad', function () {
+    return view('admindashboard');
 });
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
 
 
 
@@ -82,15 +88,16 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/upload', function () {
-    return view('welcome');
-});
-
-Route::post('/upload', [ContactusController::class, 'store']);
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Home extends Model
 {
     use HasFactory;
-    protected $fillable = ['h1', 'h2','description','img'];
+    protected $fillable = ['heading1', 'heading2','description','image'];
     // public function getTitleAttribute($value) { return ucwords(strtolower($value)) ; }
     // public function getDescriptionAttribute($value) { return ucfirst(strtolower($value));} 
     // public static function boot()
